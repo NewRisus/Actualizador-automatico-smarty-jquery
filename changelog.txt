@@ -1,0 +1,28 @@
+# Actualizador de Smarty 3x para: PhpostRisus 1.2.x y NewRisus 1.x
+
+version 1.3
+ * Diseño renovado
+ * 3 Versiones de Smarty incluidos
+ * Plugins para Smarty
+ * Actualizador para jQuery
+
+----------------------------------------------------------
+Smarty-3.1.39:
+* Prevent access to $smarty.template_object in sandbox mode. This addresses CVE-2021-26119.
+* Fixed code injection vulnerability by using illegal function names in {function name='blah'}{/function}. This addresses CVE-2021-2612
+----------------------------------------------------------
+Smarty-3.1.38:
+* Smarty::SMARTY_VERSION wasn't updated https://github.com/smarty-php/smarty/issues/628
+----------------------------------------------------------
+Smarty-3.1.37:
+* Changed error handlers and handling of undefined constants for php8-compatibility (set $errcontext argument optional) https://github.com/smarty-php/smarty/issues/605
+* Changed expected error levels in unit tests for php8-compatibility
+* Travis unit tests now run for all php versions >= 5.3, including php8
+* Travis runs on Xenial where possible
+* PHP5.3 compatibility fixes
+* Brought lexer source functionally up-to-date with compiled version
+----------------------------------------------------------
+Smarty-3.1.36:
+* smarty::SMARTY_VERSION wasn't updated in v3.1.35 https://github.com/smarty-php/smarty/issues/584
+
+Pueden visitar https://github.com/smarty-php/smarty/blob/master/CHANGELOG.md para saber más

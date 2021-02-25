@@ -1,0 +1,71 @@
+*:-webkit-autofill,
+*:-webkit-autofill:hover, 
+*:-webkit-autofill:focus  {
+	-webkit-text-fill-color: var(--bs-light);
+	transition: background-color 5000s ease-in-out 0s;
+	background-color: #213746;
+}
+.form-control,
+.form-select {
+	border: none;
+	background-color: #0004;
+	color: var(--bs-white);
+}
+.form-control::placeholder,
+.form-select::placeholder {
+	color: #444;
+}
+.form-control:focus,
+.form-select:focus {
+	border-color: transparent;
+	background:#0e1f2988;
+	color: var(--bs-white);
+}
+.form-control:disabled,
+.form-select:disabled {
+	border-color: transparent;
+	background:#56565666;
+	color:var(--bs-dark);
+	cursor: no-drop;
+}
+.logo-header img {
+	width: 40%;
+}
+.box {
+	cursor: pointer;
+}
+.box > i {
+	font-size: 3rem;
+}
+#smarty:hover,
+#smarty36:hover {
+	background-color: var(--bs-primary);
+}
+#jquery:hover,
+#smarty37:hover {
+	background-color: var(--bs-success);
+}
+#smarty39:hover {
+	background-color: var(--bs-danger);
+}
+
+.install > div svg {
+	width: 40px;
+	height: 40px;
+}
+.box-test {
+	padding: 6px;
+	margin-top: 6px ;
+	margin-bottom: 6px ;
+	margin-left: 20px ;
+}
+.box-test p {
+	margin: 0;
+	padding: 0;
+}
+.box-test > span i {
+   font-size: 2.5rem;
+   float: left;
+   margin-top: 2px;
+   margin-right: 6px;
+}
