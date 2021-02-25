@@ -38,3 +38,5 @@ y reemplazala por
 ```
 
 > Obviamente fue basado en los actualizadores de "smarty" y el de "jquery"
+
+Visita el [topic](https://newrisus.com/posts/actualizaciones/407/actualizador-de-smarty-y-jquery-beta-.html) en **New Risus**
