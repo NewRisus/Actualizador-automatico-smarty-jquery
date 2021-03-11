@@ -1,5 +1,10 @@
 # Actualizador de Smarty 3x para: PhpostRisus 1.2.x y NewRisus 1.x
 
+version 1.4
+ * Actualizador de jQuery automático (detecta la última versión existente por CDN)
+ * Se renombró pages/index.php por pages/home.php
+ * Se incorporó el archivo .htaccess
+
 version 1.3
  * Diseño renovado
  * 3 Versiones de Smarty incluidos

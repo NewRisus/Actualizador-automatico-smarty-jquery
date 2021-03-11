@@ -6,7 +6,7 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.0 23-02-2021
+ * @version v1.4 11-03-2021
  * @link https://newrisus.com
 */
 
@@ -44,7 +44,7 @@ var global = {
 	<footer class="text-center py-4">
       <p class="m-0 p-0 ">Copyright <?php echo date("Y"); ?> &copy; <a href="https://newrisus.com" target="_blank">New Risus</a></p> 
       <?php if($pagina == 'smarty'): ?>
-      	<p class="m-0 p-0 small text-muted">Versi&oacute;n del mod: v1.3 - <a href="<?php echo $url_base; ?>changelog.txt" class="text-muted">Historial de cambios</a></p>
+      	<p class="m-0 p-0 small text-muted">Versi&oacute;n del mod: v1.4 - <a href="<?php echo $url_base; ?>changelog.txt" class="text-muted">Historial de cambios</a></p>
       <?php endif; ?>
    </footer>
 </body>

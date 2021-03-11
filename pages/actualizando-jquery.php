@@ -5,7 +5,7 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.0 23-02-2021
+ * @version v1.4 11-03-2021
  * @link https://newrisus.com
 */
 
@@ -27,15 +27,16 @@ if(!isset($_POST['previo'])):
 	}
 	echo '</div>';
 endif;
-//
+
 # Reemplazar jQuery
 echo '<div class="box-test">';
 echo subhead('Actualizar: jQuery.min.js');
-if(!@copy("{$route}/assets/js/jquery.min.js", "{$folder2}/jquery.min.js")) {
+if(!@copy("https://cdn.jsdelivr.net/npm/jquery@{$_POST['last_version']}/dist/jquery.min.js", "{$folder2}/jquery.min.js")) {
 	echo verificar(false, "No se pudo reemplazar."); 
 	$oops = true;
-} else echo verificar(true, "Se reemplazó correctamente.");
+} else echo verificar(true, "Se ha descargado desde <b><a href='https://www.jsdelivr.com/' target='_blank' class='text-white'>jsdelivr</a></b> y reemplazado correctamente.");
 echo '</div>';
+
 if(!isset($_POST['previo'])):
 	# Quitamos jQuery.color
 	echo '<div class="box-test">';

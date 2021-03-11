@@ -12,10 +12,15 @@
 /* VERSIÓN DEL THEME */
 define('VersionTheme', '2.0.0');
 /*
+ *  Acá definimos la carpeta donde se almacenarán los archivos caché 
+ * que se generan automáticamente al utilizar el sitio web
+*/
+define('TS_CACHE', TS_ROOT.DIRECTORY_SEPARATOR.'cache');
+/*
  * Esta instrucción enviará los archivo caché a la carpeta 
  * que hemos definido antes
 */
-$smarty->setCompileDir(TS_ROOT.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.TS_TEMA)
+$smarty->setCompileDir(TS_CACHE.DIRECTORY_SEPARATOR.TS_TEMA)
 /*
  * Este arreglo es para habilitar el acceso a los tpl.
 */
