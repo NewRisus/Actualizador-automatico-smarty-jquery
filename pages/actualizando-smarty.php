@@ -12,6 +12,26 @@
 $raiz = dirname(dirname(__DIR__));
 $route = dirname(__DIR__);
 
+if($_POST["script"] == 1):
+   function rmdir_recursive($dir) {
+      $files = scandir($dir);
+      array_shift($files);
+      array_shift($files);
+      foreach ($files as $file) {
+         $file = $dir . '/' . $file;
+         if (is_dir($file)) {
+            rmdir_recursive($file);
+            rmdir($file);
+         } else unlink($file);
+      }
+      rmdir($dir);
+   }
+   // remove directory /home/nash/tmp
+   $dir = dirname(dirname(__DIR__)) . '/inc/smarty';
+   rmdir_recursive($dir);
+
+endif;
+mkdir(dirname(dirname(__DIR__)) . '/inc/smarty');
 echo head('Verificacion de instalacion de Smarty');
 echo '<div class="box-test">';
 echo subhead('Verificacion de directorio');

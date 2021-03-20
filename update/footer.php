@@ -12,8 +12,7 @@
 
 # Página solicitada
 $smarty->assign("tsPage",$tsPage);
-# Para acceder a los módulos de manera más rápida
-$smarty->assign("tsModulos", "modulos/{$tsPage}");
+
 # Mostramos la plantilla
 if($smarty->templateExists("t.{$tsPage}.tpl")) $smarty->display("t.{$tsPage}.tpl");
 else die("0: Lo sentimos, se produjo un error al cargar la plantilla 't.{$tsPage}.tpl' en su theme actual. Contacte al administrador");

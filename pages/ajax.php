@@ -31,7 +31,7 @@ if(!isset($_POST['cont']) || empty($_POST['cont'])) echo "0: {$url_base}?ref=nor
 switch ($action) {
 	case 'smarty':
 		$smartydir = "{$route}/inc/smarty/";
-		$cachedir = is_dir("{$route}cache/") ? "{$route}cache/" : "{$route}/global/cache/";
+		$cachedir = (is_dir("{$route}/cache/")) ? "{$route}/cache/" : "{$route}/global/cache/";
 		include 'actualizando-smarty.php';
 	break;
 	case 'jquery':

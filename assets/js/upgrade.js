@@ -1,6 +1,7 @@
 var upgrade = {
 	smarty: function() {
 		input = $("#smarty_install").serialize();
+		console.log(input);
 		$.ajax({
 			type: 'POST',
 			url: global.url + '/pages/ajax.php',

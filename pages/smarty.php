@@ -14,13 +14,17 @@ include '../header.php';
 if($db['hostname'] == 'dbhost') exit('<b>Script no instalado.</b>');
 
 $alert = 0;
-
 # Incluimos el archivo de smarty
-$smarty = new ReflectionClass('smarty');
-$smarty = $smarty->getConstants();
-$v = explode('-', $smarty["SMARTY_VERSION"]);
-$version_now = $v[0];
-if($version_now == '3.1.34') {
+if($_SERVER["TU_SCRIPT"] == 'newrisus'):
+	$smarty = new ReflectionClass('smarty');
+	$smarty = $smarty->getConstants();
+	$v = explode('-', $smarty["SMARTY_VERSION"]);
+	$version_now = $v[0];
+else:
+	$version_now = $smarty->_version;
+endif;
+
+if($version_now < '3.1.34') {
 	$sm = 'Puedes actualizar';
 	$smc = 'success';
 } else if($version_now > '3.1.34') {
@@ -47,7 +51,7 @@ if(strpos($tsCore->settings['version'], '1.2.6') !== false && strpos($tsCore->se
 	$alert = $alert + 1;
 } else $script = $tsCore->settings['version'];
 
-$act = isset($_GET['version']) ? $_GET['version'] : '';
+$act = isset($_GET['version']) ? str_replace('_', '.', $_GET['version']) : '';
 
 ?>
 
@@ -79,19 +83,19 @@ $act = isset($_GET['version']) ? $_GET['version'] : '';
 	   <p>Selecciona que versión deseas instalar ahora:</p>
 	   <div class="row rows-3">
 			<div class="col">
-				<div id="smarty36"<?php if('3.1.36' > $version_now): ?> onclick="location.href=global.url + '?do=smarty&version=3.1.36'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="smarty36"<?php if('3.1.36' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $_SERVER['TU_SCRIPT']; ?>/smarty/3_1_36'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-cloud-upload"></i>
 					<span class="text-white text-uppercase">Smarty 3.1.36</span>
 				</div>
 			</div>
 			<div class="col">
-				<div id="smarty37"<?php if('3.1.37' > $version_now): ?> onclick="location.href=global.url + '?do=smarty&version=3.1.37'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="smarty37"<?php if('3.1.37' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $_SERVER['TU_SCRIPT']; ?>/smarty/3_1_37'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-cloud-upload"></i>
 					<span class="text-white text-uppercase">Smarty 3.1.37</span>
 				</div>
 			</div>
 			<div class="col">
-				<div id="smarty39"<?php if('3.1.39' > $version_now): ?> onclick="location.href=global.url + '?do=smarty&version=3.1.39'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="smarty39"<?php if('3.1.39' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $_SERVER['TU_SCRIPT']; ?>/smarty/3_1_39'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-cloud-upload"></i>
 					<span class="text-white text-uppercase">Smarty 3.1.39</span>
 				</div>
@@ -99,14 +103,14 @@ $act = isset($_GET['version']) ? $_GET['version'] : '';
 		</div>
 	</div>
 <?php else: ?>
-	<?php if($_GET['version'] == $version_now): ?>
+	<?php if($act == $version_now): ?>
    	<div class="col-xxl-10 col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12 offset-xxl-1 offset-xl-1 offset-lg-1 offset-md-2 offset-sm-0">
-   		<div class="text-center text-danger py-5 fs-4">¿Creíste que podrías volver a instalar la actualización de: <br> <b class="text-uppercase">smarty <?php echo $_GET['version']; ?></b>?</div>
+   		<div class="text-center text-danger py-5 fs-4">¿Creíste que podrías volver a instalar la actualización de: <br> <b class="text-uppercase">smarty <?php echo $act; ?></b>?</div>
    	</div>
    	<div class="my-3 text-center">
 			<a class="btn btn-danger" href="<?php echo $url_base; ?>" role="button">Volver al inicio</a>
 		</div>
-	<?php elseif($_GET['version'] < $version_now): ?>
+	<?php elseif($act < $version_now): ?>
    	<div class="col-xxl-10 col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12 offset-xxl-1 offset-xl-1 offset-lg-1 offset-md-2 offset-sm-0">
    		<div class="text-center text-danger py-5 fs-4">Ya tienes una versión superior es:<br> <b class="text-uppercase">smarty <?php echo $version_now; ?></b></div>
    	</div>
@@ -120,37 +124,27 @@ $act = isset($_GET['version']) ? $_GET['version'] : '';
 	   	<?php if(ALERT != 0): ?>
 	   		<div class="alert alert-danger">Actualmente tienes <b><?php echo $navisos; ?></b> advertencias del actualizador...<br/>No es recomendable que instales la modificaci&oacute;n, aunque lo puedes hacer de igual manera.</div>
 	   	<?php else: ?>
-	   		<?php if($tsUser->is_member == true): ?>
-	   			<p>Hola <b><?php echo $tsUser->nick; ?></b>, Los creadores de esta modificaci&oacute;n no se hacen responsables en el caso de que instales mal la modificaci&oacute;n, existan fallos durante la instalaci&oacute;n y/o hayas comenzado a pesar de que el sistema te avis&oacute; de que no era compatible.</p>
-	   			<p class="small text-muted m-0 p-0">Al hacer click en continuar aceptas los riesgos y asumes cualquier responsabilidad de ello.</p>
-	   			<!-- <p><b class="d-block my-3 small">No olvides respaldar los archivos mencionados en el t&oacute;pic de NewRisus.</b></p> -->
-	   			<div class="border-top border-light mt-4 py-2">
-	               <h4 class="fw-bold">Selecciona tu script instalado</h4>
-	               <form method="POST" id="smarty_install">
-	               	<div class="form-check form-switch">
-							  	<input class="form-check-input" name="script" type="radio" id="script1" value="1" checked>
-							  	<label class="form-check-label" for="script1">PHPost Risus 1.2.x</label>
-							</div>
-	               	<div class="form-check form-switch">
-							  	<input class="form-check-input" name="script" type="radio" id="script2" value="2">
-							  	<label class="form-check-label" for="script2">New Risus Beta 1.0.0</label>
-							</div>
-	               <h4 class="fw-bold mt-3">Selecciona un modo de Smarty</h4>
-	               	<div class="form-check form-switch">
-							  	<input class="form-check-input" name="mode" type="radio" id="mode1" value="1" checked>
-							  	<label class="form-check-label" for="mode1">Smarty Normal</label>
-							</div>
-	               	<div class="form-check form-switch">
-							  	<input class="form-check-input" name="mode" type="radio" id="mode2" value="2">
-							  	<label class="form-check-label" for="mode2">SmartyBC permite: <code>{php}</code> y <code>{include_php}</code></label>
-							</div>
-	                  <input type="hidden" name="version" value="<?php echo $_GET['version']; ?>">
-	                  <input type="hidden" name="type" value="smarty">
-	                  <input type="hidden" name="cont" value="true">
-	               </form><!-- :D -->
-	            </div>
-	            <a href="javascript:upgrade.smarty()" class="btn iniciar btn-sm shadow text-uppercase <?php echo ($alert != 0) ? 'btn-danger' : 'btn-success'; ?>">Seguir <?php echo ($alert != 0) ? 'bajo mi propio riesgo' : 'la instalación'; ?></a>
-	   		<?php endif; ?>
+	   		<p>Hola <b><?php echo $tsUser->nick; ?></b>, Los creadores de esta modificaci&oacute;n no se hacen responsables en el caso de que instales mal la modificaci&oacute;n, existan fallos durante la instalaci&oacute;n y/o hayas comenzado a pesar de que el sistema te avis&oacute; de que no era compatible.</p>
+	   		<p class="small text-muted m-0 p-0">Al hacer click en continuar aceptas los riesgos y asumes cualquier responsabilidad de ello.</p>
+	   		<!-- <p><b class="d-block my-3 small">No olvides respaldar los archivos mencionados en el t&oacute;pic de NewRisus.</b></p> -->
+	   		<div class="border-top border-light mt-4 py-2">
+	            <form method="POST" id="smarty_install">
+	            	<h4 class="fw-bold mt-3">Selecciona un modo de Smarty</h4>
+	            	<div class="form-check form-switch">
+						  	<input class="form-check-input" name="mode" type="radio" id="mode1" value="1" checked>
+						  	<label class="form-check-label" for="mode1">Smarty Normal</label>
+						</div>
+	            	<div class="form-check form-switch">
+						  	<input class="form-check-input" name="mode" type="radio" id="mode2" value="2">
+						  	<label class="form-check-label" for="mode2">SmartyBC permite: <code>{php}</code> y <code>{include_php}</code></label>
+						</div>
+	               <input type="hidden" name="script" value="<?php echo ($_SERVER["TU_SCRIPT"] == 'phpost') ? 1 : 2; ?>">
+	               <input type="hidden" name="version" value="<?php echo $act; ?>">
+	               <input type="hidden" name="type" value="smarty">
+	               <input type="hidden" name="cont" value="true">
+	            </form><!-- :D -->
+	         </div>
+	         <a href="javascript:upgrade.smarty()" class="btn iniciar btn-sm shadow text-uppercase <?php echo ($alert != 0) ? 'btn-danger' : 'btn-success'; ?>">Seguir <?php echo ($alert != 0) ? 'bajo mi propio riesgo' : 'la instalación'; ?></a>
 			<?php endif; ?>
 	   </div>
 	<?php endif; ?>

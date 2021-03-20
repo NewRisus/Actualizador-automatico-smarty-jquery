@@ -20,8 +20,13 @@ define('SEP', DIRECTORY_SEPARATOR);
 # Asignamos la ulr creada
 define('TS_URL', $url_base);
 
+$_SERVER['TU_SCRIPT'] = (isset($_GET['script']) ? htmlentities($_GET['script']) : '');
+
 # Variable para el manejo de algunas acciones 
-$pagina = isset($_GET['do']) ? htmlentities($_GET['do']) : 'home';
+$pagina = isset($_GET['upgrade']) ? htmlentities($_GET['upgrade']) : 'home';
+
+$tile1 = ($_SERVER['TU_SCRIPT'] == 'phpost') ? 'PR' : 'NR2';
+$tile2 = ($_SERVER['TU_SCRIPT'] == 'phpost') ? 'PHPost Risus' : 'New Risus';
 
 # Hacemos que el titulo sea dinamico.
-$title = isset($_GET['do']) ? 'NR2: Actualizando - ' . ucfirst($_GET['do']) : 'New Risus: Upgrade';
+$title = isset($_GET['upgrade']) ? "{$tile1}: Actualizando - " . ucfirst($_GET['upgrade']) : "{$tile2}: Upgrade";

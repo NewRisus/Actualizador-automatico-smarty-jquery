@@ -16,13 +16,13 @@
 		<br>
 		<div class="row rows-2">
 			<div class="col">
-				<div id="smarty" onclick="location.href=global.url + '/smarty'" class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="smarty" onclick="location.href=global.url + '/<?php echo $_SERVER['TU_SCRIPT']; ?>/smarty'" class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-hdd-rack"></i>
 					<span class="text-white text-uppercase">Actualizar Smarty</span>
 				</div>
 			</div>
 			<div class="col">
-				<div id="jquery" onclick="location.href=global.url + '/jquery'" class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="jquery" onclick="location.href=global.url + '/<?php echo $_SERVER['TU_SCRIPT']; ?>/jquery'" class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-folder-symlink"></i>
 					<span class="text-white text-uppercase">Actualizar jQuery</span>
 				</div>
