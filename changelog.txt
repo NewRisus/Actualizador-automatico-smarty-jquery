@@ -1,5 +1,14 @@
 # Actualizador de Smarty 3x para: PhpostRisus 1.2.x y NewRisus 1.x
 
+version 1.6
+ * Se asigno correctamente las url
+ * Se borra el contenido de la carpeta caché
+ * Se borra el contenido de la carpeta smarty
+ * Se reemplazan correctamente los archivos
+
+version 1.5
+ * Se reparo ruta
+
 version 1.4
  * Actualizador de jQuery automático (detecta la última versión existente por CDN)
  * Se renombró pages/index.php por pages/home.php

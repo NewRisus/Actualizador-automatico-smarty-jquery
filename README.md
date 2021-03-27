@@ -1,4 +1,4 @@
-# Herramienta para actualizar Smarty y jQuery v1.5
+# Herramienta para actualizar Smarty y jQuery v1.6
 
 Con esta herramienta podrás actualizar a Smarty y jQuery, sin
 problemas.. Solo deberías tomarte el tiempo para realizar algunas

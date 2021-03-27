@@ -5,12 +5,23 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.5 11-03-2021
+ * @version v1.6 27-03-2021
  * @link https://newrisus.com
 */
 
 $raiz = dirname(dirname(__DIR__));
 $route = dirname(__DIR__);
+
+if($_POST["script"] === 'phpost' || $_POST["script"] === 'newrisus') {
+	include "{$raiz}/header.php";
+} elseif($_POST["script"] === 'newrisus2') {
+	include "{$raiz}/lib/header.php";
+}
+$sp = DIRECTORY_SEPARATOR;
+$theme 	= ($_POST["script"] == 'newrisus2') ? NRB."views{$sp}themes{$sp}{$tsCore->settings['tema']['t_path']}{$sp}js" : TS_ROOT."{$sp}themes{$sp}{$tsCore->settings['tema']['t_path']}{$sp}js";
+$folder 	= "{$theme}{$sp}*";
+$folder2 = "{$theme}{$sp}";
+
 if(!isset($_POST['previo'])):
 	echo head('Actualizaci&oacute;n Realizada');
 	echo '<div class="box-test">';
@@ -31,7 +42,9 @@ endif;
 # Reemplazar jQuery
 echo '<div class="box-test">';
 echo subhead('Actualizar: jQuery.min.js');
-if(!@copy("https://cdn.jsdelivr.net/npm/jquery@{$_POST['last_version']}/dist/jquery.min.js", "{$folder2}/jquery.min.js")) {
+$assetsJs = ($_POST['script'] == 'newrisus2') ? NRB . "assets{$sp}js" : $folder2;
+
+if(!@copy("https://cdn.jsdelivr.net/npm/jquery@{$_POST['last_version']}/dist/jquery.min.js", "{$assetsJs}/jquery.min.js")) {
 	echo verificar(false, "No se pudo reemplazar."); 
 	$oops = true;
 } else echo verificar(true, "Se ha descargado desde <b><a href='https://www.jsdelivr.com/' target='_blank' class='text-white'>jsdelivr</a></b> y reemplazado correctamente.");

@@ -5,13 +5,19 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.5 11-03-2021
+ * @version v1.6 27-03-2021
  * @link https://newrisus.com
 */
 
-include '../header.php';
+$route = dirname(dirname(__DIR__));
+if($GLOBALS["TU_SCRIPT"] === 'phpost' && $GLOBALS["TU_SCRIPT"] === 'newrisus') {
+	include "{$route}/header.php";
+} elseif($GLOBALS["TU_SCRIPT"] === 'newrisus2') {
+	include "{$route}/lib/header.php";
+}
+
 $sp = DIRECTORY_SEPARATOR;
-$theme 	= TS_ROOT."{$sp}themes{$sp}{$tsCore->settings['tema']['t_path']}{$sp}js";
+$theme 	= ($GLOBALS["TU_SCRIPT"] == 'newrisus2') ? NRB."views{$sp}themes{$sp}{$tsCore->settings['tema']['t_path']}{$sp}js" : TS_ROOT."{$sp}themes{$sp}{$tsCore->settings['tema']['t_path']}{$sp}js";
 $folder 	= "{$theme}{$sp}*";
 $folder2 = "{$theme}{$sp}";
 
@@ -36,7 +42,7 @@ if (preg_match('|<select class="versions">(.*?)</select>|is', $url_npm, $select_
    <div id="upgrade" class="col-xxl-10 col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12 offset-xxl-2 offset-xl-2 offset-lg-2 offset-md-2 offset-sm-0"></div>
 	<div class="col-xxl-8 col-xl-8 col-lg-8 col-md-10 col-sm-12 col-12 offset-xxl-2 offset-xl-2 offset-lg-2 offset-md-1 offset-sm-0" id="hide">
 		<div class="hidden">
-			<p class="text-muted">Este actualizador de archivos .js lograr&aacute; actualizar todas las funciones obsoletas de <b>Phpost Risus 1.x</b> y <b>New Risus 1.x</b>, lograr&aacute; actualizarlas a las m&aacute;s recientes y disponibles que existan al momento para <b>jQuery <?php echo $urlnpm; ?></b>.</p>
+			<p class="text-muted">Este actualizador de archivos .js lograr&aacute; actualizar todas las funciones obsoletas de <b>Phpost Risus 1.x</b> y <b>New Risus (1.x, 2.x)</b>, lograr&aacute; actualizarlas a las m&aacute;s recientes y disponibles que existan al momento para <b>jQuery <?php echo $urlnpm; ?></b>.</p>
 			<p>Se actualizar&aacute;n funciones tales como:</p>
 			<p>De <code>.unbind()</code> a <code>.off()</code> # De <code>.bind()</code>/<code>.live()</code> a <code>.on()</code> # De <code>.size()</code> a <code>.length</code> # De <code>.attr(</code> a <code>.prop(</code></p>
 			<div class="alert alert-warning border-0 p-1 text-center"> 
@@ -51,6 +57,7 @@ if (preg_match('|<select class="versions">(.*?)</select>|is', $url_npm, $select_
 				  	<label class="form-check-label" for="echo">Ya había realizado una actualización con otro upgrade</label>
 				</div>
 				<input name="cont" value="true" type="hidden"/>
+            <input type="hidden" name="script" value="<?php echo $GLOBALS["TU_SCRIPT"]; ?>">
             <input type="hidden" name="type" value="jquery">
             <input type="hidden" name="last_version" value="<?php echo $urlnpm; ?>">
 				<a href="javascript:upgrade.jquery()" class="btn iniciar btn-success btn-block text-white">Iniciar actualización</a>

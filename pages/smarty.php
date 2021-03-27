@@ -5,17 +5,19 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.5 11-03-2021
+ * @version v1.6 27-03-2021
  * @link https://newrisus.com
 */
 
-include '../header.php';
+$raiz = dirname(dirname(__DIR__));
+if($GLOBALS["TU_SCRIPT"] === 'phpost' || $GLOBALS["TU_SCRIPT"] === 'newrisus') {
+	include "{$raiz}/header.php";
+} elseif($GLOBALS["TU_SCRIPT"] === 'newrisus2') {
+	include "{$raiz}/lib/header.php";
+}
 
-if($db['hostname'] == 'dbhost') exit('<b>Script no instalado.</b>');
-
-$alert = 0;
 # Incluimos el archivo de smarty
-if($_SERVER["TU_SCRIPT"] == 'newrisus'):
+if($GLOBALS["TU_SCRIPT"] == 'newrisus' || $GLOBALS["TU_SCRIPT"] == 'newrisus2'):
 	$smarty = new ReflectionClass('smarty');
 	$smarty = $smarty->getConstants();
 	$v = explode('-', $smarty["SMARTY_VERSION"]);
@@ -24,7 +26,9 @@ else:
 	$version_now = $smarty->_version;
 endif;
 
-if($version_now < '3.1.34') {
+$alert = 0;
+
+if($version_now <= '3.1.34') {
 	$sm = 'Puedes actualizar';
 	$smc = 'success';
 } else if($version_now > '3.1.34') {
@@ -83,19 +87,19 @@ $act = isset($_GET['version']) ? str_replace('_', '.', $_GET['version']) : '';
 	   <p>Selecciona que versión deseas instalar ahora:</p>
 	   <div class="row rows-3">
 			<div class="col">
-				<div id="smarty36"<?php if('3.1.36' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $_SERVER['TU_SCRIPT']; ?>/smarty/3_1_36'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="smarty36"<?php if('3.1.36' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $GLOBALS['TU_SCRIPT']; ?>/smarty/3_1_36'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-cloud-upload"></i>
 					<span class="text-white text-uppercase">Smarty 3.1.36</span>
 				</div>
 			</div>
 			<div class="col">
-				<div id="smarty37"<?php if('3.1.37' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $_SERVER['TU_SCRIPT']; ?>/smarty/3_1_37'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="smarty37"<?php if('3.1.37' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $GLOBALS['TU_SCRIPT']; ?>/smarty/3_1_37'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-cloud-upload"></i>
 					<span class="text-white text-uppercase">Smarty 3.1.37</span>
 				</div>
 			</div>
 			<div class="col">
-				<div id="smarty39"<?php if('3.1.39' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $_SERVER['TU_SCRIPT']; ?>/smarty/3_1_39'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="smarty39"<?php if('3.1.39' > $version_now): ?> onclick="location.href=global.url + '/<?php echo $GLOBALS['TU_SCRIPT']; ?>/smarty/3_1_39'"<?php endif; ?> class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-cloud-upload"></i>
 					<span class="text-white text-uppercase">Smarty 3.1.39</span>
 				</div>
@@ -138,7 +142,7 @@ $act = isset($_GET['version']) ? str_replace('_', '.', $_GET['version']) : '';
 						  	<input class="form-check-input" name="mode" type="radio" id="mode2" value="2">
 						  	<label class="form-check-label" for="mode2">SmartyBC permite: <code>{php}</code> y <code>{include_php}</code></label>
 						</div>
-	               <input type="hidden" name="script" value="<?php echo ($_SERVER["TU_SCRIPT"] == 'phpost') ? 1 : 2; ?>">
+	               <input type="hidden" name="script" value="<?php echo ($GLOBALS["TU_SCRIPT"] == 'phpost') ? 1 : ($GLOBALS["TU_SCRIPT"] == 'newrisus' ? 2 : 3); ?>">
 	               <input type="hidden" name="version" value="<?php echo $act; ?>">
 	               <input type="hidden" name="type" value="smarty">
 	               <input type="hidden" name="cont" value="true">
