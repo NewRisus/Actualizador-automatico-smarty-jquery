@@ -9,8 +9,6 @@
  * @link https://newrisus.com
  * @file ajustes.php
 */
-/* VERSIÓN DEL THEME */
-define('VersionTheme', '2.0.0');
 /*
  *  Acá definimos la carpeta donde se almacenarán los archivos caché 
  * que se generan automáticamente al utilizar el sitio web
@@ -41,13 +39,7 @@ $smarty->setCompileDir(TS_CACHE.DIRECTORY_SEPARATOR.TS_TEMA)
 $smarty->loadFilter('output', 'trimwhitespace');
 
 /* PARA LAS CLAVES DE RECAPTCHA */
-if($tsCore->settings['c_recaptcha'] == 0) {
-  define('RC_PUK',$tsCore->settings['pkey']);
-  define('RC_PIK',$tsCore->settings['skey']);
-} else {
-  define('RC_PUK',$tsCore->settings['pkey3']);
-  define('RC_PIK',$tsCore->settings['skey3']);
-}
+$smarty->assign('tsPkey', $tsCore->settings['pkey']);
 
 /**
  * -------------------------------------------------------------------
@@ -66,8 +58,6 @@ $lang = explode(',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
 $locale = $lang[0];
 setlocale(LC_ALL, $locale);
 setlocale(LC_TIME, 'spanish');
-// Linux
-setlocale(LC_MESSAGES, $locale);
 // windows
 putenv("LC_ALL={$locale}"); 
 $smarty->assign('Lenguaje', $locale);

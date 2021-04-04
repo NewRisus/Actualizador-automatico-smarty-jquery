@@ -1,5 +1,10 @@
 # Actualizador de Smarty 3x para: PhpostRisus 1.2.x y NewRisus 1.x
 
+version 1.7
+ * Se asigno correctamente las rutas
+ * Se crea carpeta smarty, luego de ser borrado
+ * Se cambio algunos ajustes en el archivo "ajustes.php"
+
 version 1.6
  * Se asigno correctamente las url
  * Se borra el contenido de la carpeta caché

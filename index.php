@@ -6,7 +6,7 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.6 27-03-2021
+ * @version v1.7 04-04-2021
  * @link https://newrisus.com
 */
 
@@ -38,7 +38,7 @@ var global = {
 			<img src="<?php echo $url_base . '/assets/images/logo-complete.webp'; ?>" class="img-fluid nrlogo" alt="New Risus Upgrade">
 		</div>
 		<div class="container">
-			<?php if(!$GLOBALS['TU_SCRIPT']): ?>
+			<?php if(!$yourScript): ?>
 				<div class="d-flex justify-content-center align-items-center">
 					<div class="w-75 mx-auto mt-5">
 						<p>Selecciona el script que estas utilizando:</p>
@@ -73,7 +73,7 @@ var global = {
 		<footer class="text-center py-4">
 	      <p class="m-0 p-0 ">Copyright <?php echo date("Y"); ?> &copy; <a href="https://newrisus.com" target="_blank">New Risus</a></p> 
 	      <?php if($pagina == 'smarty'): ?>
-	      	<p class="m-0 p-0 small text-muted">Versi&oacute;n del mod: v1.6 - <a href="<?php echo $url_base; ?>/changelog.txt" class="text-muted">Historial de cambios</a></p>
+	      	<p class="m-0 p-0 small text-muted">Versi&oacute;n del mod: v1.7 - <a href="<?php echo $url_base; ?>/changelog.txt" class="text-muted">Historial de cambios</a></p>
 	      <?php endif; ?>
 	   </footer>
 </body>

@@ -5,7 +5,7 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.6 27-03-2021
+ * @version v1.7 04-04-2021
  * @link https://newrisus.com
 */
 
@@ -14,11 +14,14 @@ $route = dirname(__DIR__);
 
 if($_POST["script"] == 1 || $_POST["script"] == 2) {
    include "{$raiz}/header.php";
+
 } elseif($_POST["script"] == 3) {
    include "{$raiz}/lib/header.php";
+
 }
 
-$lib = ($_POST["script"] == 3) ? 'lib' : 'inc';
+$lib_inc = ($_POST["script"] == 3) ? "{$raiz}/lib" : "{$raiz}/inc";
+$lib_raiz = ($_POST["script"] == 3) ? "{$raiz}/lib" : "{$raiz}/";
 
 $smartydir = "{$raiz}/{$lib}/smarty/";
 $cachedir = ($_POST["script"] == 1) ? "{$raiz}/cache/" : ($_POST["script"] == 2 ? "{$raiz}/global/cache/" : "{$raiz}/lib/cache/");
@@ -35,6 +38,7 @@ function rmdir_recursive($dir) {
       } else unlink($file);
    }
    rmdir($dir);
+   mkdir($dir, 0777, true);
 }
 rmdir_recursive($smartydir);
 
@@ -42,9 +46,9 @@ echo head('Verificacion de instalacion de Smarty');
 echo '<div class="box-test">';
 echo subhead('Verificacion de directorio');
 if (!is_dir($smartydir)) {
-   echo verificar(false, "El directorio de {$lib}/smarty/ no existe");
+   echo verificar(false, "El directorio de {$lib_inc}/smarty/ no existe");
    $oops = true;
-} else echo verificar(true, "El directorio de {$lib}/smarty/ existe");
+} else echo verificar(true, "El directorio de {$lib_inc}/smarty/ existe");
 echo '</div>';
 #
 echo '<div class="box-test">';
@@ -71,7 +75,7 @@ $zip = new ZipArchive;
 $upgrade = dirname(__DIR__) . "/update/smarty-{$_POST['version']}.zip";
 if($oops != true) {
 	if ($zip->open($upgrade) === TRUE) {
-	   $zip->extractTo( "{$raiz}/{$lib}/smarty" );
+	   $zip->extractTo( "{$lib_inc}/smarty" );
 	   $zip->close();
 	   echo verificar(true, 'Se ha completado el desempaquetado del archivo');
 	} else {
@@ -88,7 +92,7 @@ $zip = new ZipArchive;
 $upgrade = dirname(__DIR__) . "/update/plugins.zip";
 if($oops != true) {
    if ($zip->open($upgrade) === TRUE) {
-      $zip->extractTo( "{$raiz}/{$lib}/smarty/" );
+      $zip->extractTo( "{$lib_inc}/smarty/" );
       $zip->close();
       echo verificar(true, 'Se ha completado el desempaquetado de los plugins');
    } else {
@@ -105,7 +109,7 @@ echo subhead('Reemplazando el archivo <b>c.smarty.php</b>');
 if($oops != true) {
 	$replace['file'] = 'c.smarty.php';  # re0
    $replace['from'] = "{$route}/update/{$replace['file']}"; # re1
-   $replace['to'] = "{$raiz}/{$lib}/class/{$replace['file']}"; # re2
+   $replace['to'] = "{$lib_inc}/class/{$replace['file']}"; # re2
    # Comprobando que exista el archivo c.smarty.php
    if (!file_exists($replace['to'])) {
    	echo verificar(false, "No existe en tu script ({$replace['to']})");
@@ -131,7 +135,7 @@ echo subhead('Reemplazar ajax_files.php');
 if($oops != true) {
 	$replace['file'] = 'ajax_files.php';  # re0
    $replace['from'] = "{$route}/update/{$replace['file']}"; # re1
-   $replace['to'] = "{$raiz}/{$lib}/php/{$replace['file']}"; # re2
+   $replace['to'] = "{$lib_inc}/php/{$replace['file']}"; # re2
    # Comprobamos que exista el archivo ajax_files.php
    if (!file_exists($replace['to'])) {
       echo verificar(false, "No existe en tu script ({$replace['to']})");
@@ -155,7 +159,7 @@ echo subhead('Sistema de información (New Risus en vivo)');
 if($oops != true) {
 	$replace['file'] = 'ajax.feed.php';  # re0
    $replace['from'] = "{$route}/update/{$replace['file']}"; # re1
-   $replace['to'] = "{$raiz}/{$lib}/php/ajax/{$replace['file']}"; # re2
+   $replace['to'] = "{$lib_inc}/php/ajax/{$replace['file']}"; # re2
    # Comprobamos que exista el archivo ajax.feed.php
    if (!file_exists($replace['to'])) {
       echo verificar(false, "No existe en tu script ({$replace['to']})");
@@ -193,7 +197,7 @@ echo subhead('Generador de plantillas (footer.php)');
 if($oops != true) {
 	$replace['file'] = 'footer.php';  # re0
    $replace['from'] = "{$route}/update/{$replace['file']}"; # re1
-   $replace['to'] = "{$raiz}/{$lib}/{$replace['file']}"; # re2
+   $replace['to'] = "{$lib_raiz}/{$replace['file']}"; # re2
    # Comprobamos que exista el archivo footer.php
    if (!file_exists($replace['to'])) {
       echo verificar(false, "No existe en tu script ({$replace['to']})");
@@ -215,14 +219,17 @@ echo '</div>';
 if($_POST["script"] == 1) {
    echo '<div class="box-test">';
    echo subhead('Realizo cambios en header.php');
-   $ptf = "{$raiz}/header.php";
+   $ptf = "{$lib_raiz}/header.php";
+   $fc0 = file_get_contents($ptf);
+   $fc0 = str_replace("error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE ^ E_DEPRECATED);","error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);", $fc0);
+   file_put_contents($ptf,$fc0);
    # DEFINIMOS RUTA DE SMARTY
    $fc1 = file_get_contents($ptf);
    $fc1 = str_replace("define('TS_EXTRA', TS_ROOT.'/inc/ext/');","define('TS_EXTRA', TS_ROOT.'/inc/ext/');\n\n    define('TS_SMARTY', TS_ROOT.'/inc/smarty/');", $fc1);
    file_put_contents($ptf,$fc1);
    # INSERTAMOS UN ARCHIVO DE CONFIGURACIÓN
    $fc4 = file_get_contents($ptf);
-   $fc4 = str_replace("\$smarty->assign('tsMPs', \$tsMP->mensajes);","\$smarty->assign('tsMPs', \$tsMP->mensajes);\n\n    # NUEVO ARCHIVO DE CONFIGURACION by Miguel92\n    include TS_ROOT . '/ajustes.php';", $fc4);
+   $fc4 = str_replace("\$tsMP->mensajes);","\$smarty->assign('tsMPs', \$tsMP->mensajes);\n\n    # NUEVO ARCHIVO DE CONFIGURACION by Miguel92\n    include TS_ROOT . '/ajustes.php';", $fc4);
    file_put_contents($ptf,$fc4);
    # CAMIAMOS EL ARCHIVO DE SMARTY
    $fc2 = file_get_contents($ptf);

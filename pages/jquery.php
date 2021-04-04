@@ -5,7 +5,7 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.6 27-03-2021
+ * @version v1.7 04-04-2021
  * @link https://newrisus.com
 */
 

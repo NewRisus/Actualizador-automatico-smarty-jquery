@@ -5,7 +5,7 @@
  * @package New_Risus_Upgrade
  * @author Miguel92 
  * @copyright NewRisus 2021
- * @version v1.6 27-03-2021
+ * @version v1.7 04-04-2021
  * @link https://newrisus.com
 */
 ?>
@@ -16,13 +16,13 @@
 		<br>
 		<div class="row rows-3">
 			<div class="col">
-				<div id="smarty" onclick="location.href=global.url + '/<?php echo $GLOBALS['TU_SCRIPT']; ?>/smarty'" class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="smarty" onclick="location.href=global.url + '/<?php echo $yourScript; ?>/smarty'" class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-hdd-rack"></i>
 					<span class="text-white text-uppercase">Actualizar Smarty</span>
 				</div>
 			</div>
 			<div class="col">
-				<div id="jquery" onclick="location.href=global.url + '/<?php echo $GLOBALS['TU_SCRIPT']; ?>/jquery'" class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
+				<div id="jquery" onclick="location.href=global.url + '/<?php echo $yourScript; ?>/jquery'" class="box rounded shadow d-flex justify-content-center align-items-center flex-column py-5">
 					<i class="bi bi-folder-symlink"></i>
 					<span class="text-white text-uppercase">Actualizar jQuery</span>
 				</div>

@@ -9,18 +9,11 @@
  * @link https://newrisus.com
  * @file ajustes.php
 */
-/* VERSIÓN DEL THEME */
-define('VersionTheme', '2.0.0');
-/*
- *  Acá definimos la carpeta donde se almacenarán los archivos caché 
- * que se generan automáticamente al utilizar el sitio web
-*/
-define('TS_CACHE', TS_ROOT.DIRECTORY_SEPARATOR.'cache');
 /*
  * Esta instrucción enviará los archivo caché a la carpeta 
  * que hemos definido antes
 */
-$smarty->setCompileDir(TS_CACHE.DIRECTORY_SEPARATOR.TS_TEMA)
+$smarty->setCompileDir(TS_ROOT.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.TS_TEMA)
 /*
  * Este arreglo es para habilitar el acceso a los tpl.
 */
@@ -36,14 +29,8 @@ $smarty->setCompileDir(TS_CACHE.DIRECTORY_SEPARATOR.TS_TEMA)
 /* COMPRIME EL HTML PARA MÁS VELOCIDAD */
 $smarty->loadFilter('output', 'trimwhitespace');
 
-/* PARA LAS CLAVES DE RECAPTCHA */
-if($tsCore->settings['c_recaptcha'] == 0) {
-  define('RC_PUK',$tsCore->settings['pkey']);
-  define('RC_PIK',$tsCore->settings['skey']);
-} else {
-  define('RC_PUK',$tsCore->settings['pkey3']);
-  define('RC_PIK',$tsCore->settings['skey3']);
-}
+/* PARA LAS CLAVE DE RECAPTCHA V3 */
+$smarty->assign('tsPkey', $tsCore->settings['pkey']);
 
 /**
  * -------------------------------------------------------------------
@@ -62,8 +49,6 @@ $lang = explode(',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
 $locale = $lang[0];
 setlocale(LC_ALL, $locale);
 setlocale(LC_TIME, 'spanish');
-// Linux
-setlocale(LC_MESSAGES, $locale);
 // windows
 putenv("LC_ALL={$locale}"); 
 $smarty->assign('Lenguaje', $locale);
